@@ -10,10 +10,6 @@ require('./config/database.js')
 //routes
 var testRoutes = require('./routes/test.js');
 
-if(process.env.NODE_ENV == 'test'){
-
-}
-
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
