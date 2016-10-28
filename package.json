@@ -4,14 +4,25 @@
   "description": "backend for dine app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "mocha --timeout 10000",
+    "start": "node server.js"
   },
-  "author": "",
+  "repository": "https://github.com/eecs394-f16/dine_backend.git",
+  "author": "eecs_349_f16_yellow",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "passport": "^0.3.2",
+    "passport-linkedin": "^1.0.0",
     "pg-promise": "^5.3.5"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.1.2",
+    "morgan": "^1.7.0",
+    "supertest": "^2.0.1"
   }
 }
