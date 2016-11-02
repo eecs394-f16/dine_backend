@@ -22,6 +22,7 @@
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-linkedin": "^1.0.0",
+    "passport-linkedin-oauth2": "latest",
     "pg-promise": "^5.3.5"
   },
   "devDependencies": {
