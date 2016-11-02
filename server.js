@@ -2,8 +2,8 @@
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
-var passport =require('passport');
-var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+//var passport =require('passport');
+//var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
