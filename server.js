@@ -16,9 +16,9 @@ app.set('port', port);
 
 //routes
 var testRoutes = require('./app/routes/test.js');
-var loginRoutes = require('./app/routes/login.js');
 var candidateRoutes = require('./app/routes/candidate.js');
 var userRoutes = require('./app/routes/user.js');
+var loginRoutes = require('./app/routes/login.js');
 
 app.use(morgan('dev')); //log ever request to console
 app.use(cookieParser());
@@ -28,6 +28,29 @@ app.use(cookieParser());
 // }));
 
 app.use(express.static(__dirname + '/public'));
+
+//TEMPORARY CAN BE HUGE SECURITY FLAW
+// WITH THIS APP IS OPEN TO ANYONE TO CREATE
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST", "PUT");
+    next();
+});
+
+//route configuration
+app.route('/test')
+    .get(testRoutes.testGet);
+
+app.route('/login')
+    .get(loginRoutes.login);
+
+app.route('/candidate')
+    .get(candidateRoutes.getAllCandidates);
+
+app.route('/user/:id')
+    .get(userRoutes.getMe);
+
 
 //passport
 // app.use(session({secret: process.env.SECRET_KEY}));
@@ -90,26 +113,7 @@ app.use(express.static(__dirname + '/public'));
 //   }
 // ));
 
-//TEMPORARY CAN BE HUGE SECURITY FLAW
-// WITH THIS APP IS OPEN TO ANYONE TO CREATE
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-    res.header("Access-Control-Allow-Methods", "GET, POST", "PUT");
-    next();
-});
 
-app.route('/test')
-    .get(testRoutes.testGet);
-
-app.route('/login')
-    .get(loginRoutes.login);
-
-app.route('/candidate')
-    .get(candidateRoutes.getAllCandidates);
-
-app.route('/user/:id')
-    .get(userRoutes.getMe);
 
 // app.get('/auth/linkedin',
 //   passport.authenticate('linkedin'),
