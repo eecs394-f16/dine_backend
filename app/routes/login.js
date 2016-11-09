@@ -11,8 +11,7 @@ var login = function(req, res) {
         //on success
         function(data, error) {
             if (error) {
-                res.status(401);
-                res.json({type: "error", message:"This user - password combination was not found"});
+                res.status(401).send("This user - password combination was not found");
             } else {
                 userService.getUser(data[0].user_id,
                     //on success
