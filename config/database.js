@@ -11,13 +11,17 @@ require('dotenv').config();
     user: process.env.DB_USER,
     password:process.env.DB_PASS,
     ssl: true
-  }
+  };
 
 var db = pgp(connection);
 
+var environment = process.env.NODE_ENV;
+
 exports.interactWithDatabase = function(queryString, callback){
   var results = [];
-  console.log(queryString);
+  if(environment !== 'test'){
+    console.log(queryString);
+  }
   db.any(queryString, [true])
     .then(function (data) {
         // success;

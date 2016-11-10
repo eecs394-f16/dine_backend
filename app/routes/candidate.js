@@ -13,14 +13,15 @@ var getAllCandidates = function(req,res){
                 + "       where ulk.candidate = " + userId
                 + "   ) as ulk"
                 + " on u.id = ulk.user_id"
-                +" where not u.id = "+userId+ ";";
+                +" where not u.id = "+userId
+                +" and (u.photo_link NOTNULL OR u.industry NOTNULL or u.job_title NOTNULL);";
   db.interactWithDatabase(sqlString,
     //on success
     function(data, error){
       if(error){
-        res.json(error);
+        res.status(500).send(error);
       }else{
-          res.json(data);
+          res.status(200).send(data);
       }
     })
 };

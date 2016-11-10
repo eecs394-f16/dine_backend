@@ -13,7 +13,7 @@ var login = function(req, res) {
             if (error) {
                 res.status(403).send("This user - password combination was not found");
             } else {
-                userService.getUser(data[0].user_id,
+                userService.getUser({userid: data[0].user_id},
                     //on success
                     function(data) {
                         res.json(data);
@@ -26,6 +26,9 @@ var login = function(req, res) {
             }
         })
 };
+
+
+
 
 
 module.exports = {

@@ -4,7 +4,7 @@
     "description": "backend for dine app",
     "main": "index.js",
     "scripts": {
-        "test": "mocha --timeout 10000",
+        "test": "mocha --timeout 10000 ",
         "start": "node server.js"
     },
     "repository": "https://github.com/eecs394-f16/dine_backend.git",

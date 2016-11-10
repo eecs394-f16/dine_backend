@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
+var environment = process.env.NODE_ENV || 'dev';
 //var passport =require('passport');
 //var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var morgan = require('morgan');
@@ -19,13 +20,14 @@ var testRoutes = require('./app/routes/test.js');
 var candidateRoutes = require('./app/routes/candidate.js');
 var userRoutes = require('./app/routes/user.js');
 var loginRoutes = require('./app/routes/login.js');
-
-app.use(morgan('dev')); //log ever request to console
+if(environment !=='test'){
+    app.use(morgan('dev')); //log ever request to console
+}
 app.use(cookieParser());
-// app.use(bodyParser());
-// app.use(bodyParser.urlencoded({
-//   extended: true
-// }));
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({
+extended: true
+}));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -48,7 +50,10 @@ app.route('/login')
 app.route('/candidate')
     .get(candidateRoutes.getAllCandidates);
 
-app.route('/user/:id')
+
+app.route('/user')
+    .post(userRoutes.createUser)
+    .delete(userRoutes.deleteUser)
     .get(userRoutes.getMe);
 
 
@@ -130,7 +135,7 @@ app.route('/user/:id')
 //)
 
 var server = app.listen(app.get('port'), function() {
-    console.log("Express server listening on port" + server.address().port);
+    console.log("Express server listening on port: " + server.address().port);
 });
 
 
