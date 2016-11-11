@@ -50,11 +50,13 @@ app.route('/login')
 app.route('/candidate')
     .get(candidateRoutes.getAllCandidates);
 
-
 app.route('/user')
     .post(userRoutes.createUser)
     .delete(userRoutes.deleteUser)
     .get(userRoutes.getMe);
+
+app.route('/user/update')
+    .post(userRoutes.updateProfile);
 
 
 //passport

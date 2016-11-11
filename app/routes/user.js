@@ -152,12 +152,39 @@ var createPasswordAssociation = function(userObject, successCallback, failureCal
         })
 };
 
+var updateProfile = function(req, res){
+    var updateObject = req.body;
+    var keyName = req.body.key_name;
+    var keyValue = req.body.key_value;
+    var updates = req.body.updates;
 
+    var UPDATEstring = 'UPDATE users';
+    var SETstring = " SET ";
+    var WHEREstring = " WHERE " + keyName+"='" + keyValue + "';";
+
+    for(var i = 0; i < updates.length; i ++) {
+        SETstring += updates[i].key + " ='" + updates[i].value + "', ";
+    }
+
+    var sqlString = UPDATEstring + SETstring.slice(0,-2) + WHEREstring;
+
+    db.interactWithDatabase(sqlString,
+        //on success
+        function(data, error){
+            if(error){
+                res.status(500).send(error);
+            }else{
+                res.status(200).send(keyValue + " successfully updated!");
+            }
+        })
+
+};
 
 
 module.exports = {
     getMe: getMe,
     getUser: getUser,
     createUser: createUser,
-    deleteUser: deleteUserRequest
+    deleteUser: deleteUserRequest,
+    updateProfile: updateProfile
 };
