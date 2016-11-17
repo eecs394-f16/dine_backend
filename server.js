@@ -20,6 +20,9 @@ var testRoutes = require('./app/routes/test.js');
 var candidateRoutes = require('./app/routes/candidate.js');
 var userRoutes = require('./app/routes/user.js');
 var loginRoutes = require('./app/routes/login.js');
+var likeRoutes = require('./app/routes/like.js');
+
+
 if(environment !=='test'){
     app.use(morgan('dev')); //log ever request to console
 }
@@ -57,6 +60,12 @@ app.route('/user')
 
 app.route('/user/update')
     .post(userRoutes.updateProfile);
+
+app.route('/like')
+    .post(likeRoutes.like);
+
+app.route('/unlike')
+    .post(likeRoutes.unlike);
 
 
 //passport

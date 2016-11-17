@@ -1,6 +1,11 @@
 db = require('../../config/database.js');
 userService = require('./user.js');
 
+/**
+ *
+ * @param req
+ * @param res
+ */
 var login = function(req, res) {
 
     var password = req.query.password;

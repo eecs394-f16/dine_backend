@@ -1,5 +1,10 @@
 db = require('../../config/database.js');
 
+/**
+ *
+ * @param req
+ * @param res
+ */
 var getMe = function(req,res){
   var userid = req.query.userid;
     var username = req.query.username;
@@ -20,7 +25,12 @@ var getMe = function(req,res){
       }
   )
 };
-
+/**
+ *
+ * @param params
+ * @param successCallback
+ * @param failureCallback
+ */
 var getUser = function(params, successCallback, failureCallback){
     var sqlString;
     if(params.userid){
@@ -41,7 +51,11 @@ var getUser = function(params, successCallback, failureCallback){
         }
       })
 };
-
+/**
+ *
+ * @param req
+ * @param res
+ */
 var deleteUserRequest = function(req,res){
     var username = req.query.username;
     deleteUserFunction(username,
@@ -55,7 +69,12 @@ var deleteUserRequest = function(req,res){
 
     )
 };
-
+/**
+ *
+ * @param username
+ * @param successCallback
+ * @param failureCallbac
+ */
 var deleteUserFunction = function(username, successCallback, failureCallbac){
     var sqlString = "DELETE from USERS where username = '" +
         username +
@@ -73,7 +92,11 @@ var deleteUserFunction = function(username, successCallback, failureCallbac){
 };
 
 
-
+/**
+ *
+ * @param req
+ * @param res
+ */
 var createUser = function(req, res){
     var USER_OBJECT = req.body;
     createProfile(USER_OBJECT,
@@ -110,7 +133,12 @@ var createUser = function(req, res){
 
 
 };
-
+/**
+ *
+ * @param userObject
+ * @param successCallback
+ * @param failureCallback
+ */
 var createProfile = function(userObject, successCallback, failureCallback){
     var sqlString = "INSERT INTO users (first_name, last_name, username) " +
         " values(" +
@@ -131,6 +159,12 @@ var createProfile = function(userObject, successCallback, failureCallback){
         })
 };
 
+/**
+ *
+ * @param userObject
+ * @param successCallback
+ * @param failureCallback
+ */
 var createPasswordAssociation = function(userObject, successCallback, failureCallback){
 
     var sqlString = "INSERT INTO account (email, password, user_id) "
@@ -152,6 +186,12 @@ var createPasswordAssociation = function(userObject, successCallback, failureCal
         })
 };
 
+
+/**
+ *
+ * @param req
+ * @param res
+ */
 var updateProfile = function(req, res){
     var updateObject = req.body;
     var keyName = req.body.key_name;

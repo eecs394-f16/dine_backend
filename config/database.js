@@ -17,6 +17,10 @@ var db = pgp(connection);
 
 var environment = process.env.NODE_ENV;
 
+/**
+ * @param queryString
+ * @param callback
+ */
 exports.interactWithDatabase = function(queryString, callback){
   var results = [];
   if(environment !== 'test'){

@@ -1,5 +1,10 @@
 db = require('../../config/database.js');
 
+/**
+ *
+ * @param req
+ * @param res
+ */
 var getAllCandidates = function(req,res){
   var userId = req.query.userId;
 

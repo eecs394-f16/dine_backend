@@ -1,5 +1,10 @@
 db = require('../../config/database.js');
 
+/**
+ *
+ * @param req
+ * @param res
+ */
 var testGet = function(req,res){
   var sqlString = "SELECT * FROM test;"
 
