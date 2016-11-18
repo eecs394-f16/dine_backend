@@ -52,45 +52,44 @@ describe("Unliking functionality", function(){
         };
     });
 
-    //describe("Scenario 1: user 1 likes user 2, unlikes user 2", function(){
-    //
-    //    it("should respond with a 0 when user 1 likes user 2", function(done){
-    //        chai.request(server)
-    //            .post('/like')
-    //            .query({person_liking: "TEST_USER_USERNAME_UNLIKE_1", person_being_liked: "TEST_USER_USERNAME_UNLIKE_2"})
-    //            .end(function(err, res){
-    //                res.should.have.status(200);
-    //                res.body.result.should.equal("PENDING");
-    //                chai.request(server)
-    //                    .post('/unlike')
-    //                    .query({person_unliking: "TEST_USER_USERNAME_UNLIKE_1", person_being_unliked: "TEST_USER_USERNAME_UNLIKE_2" })
-    //                    .end(function(err, res){
-    //                        res.should.have.status(200);
-    //                        res.body.result.should.equal("UNLIKED");
-    //                        done();
-    //                    })
-    //            })
-    //    });
-    //});
+    describe("Scenario 1: user 1 likes user 2, unlikes user 2", function(){
 
-    describe("Scenario 2: user unlikes a nonexistent user", function(){
+       it("should respond with a 0 when user 1 likes user 2", function(done){
+           chai.request(server)
+               .post('/like')
+               .query({person_liking: "TEST_USER_USERNAME_UNLIKE_1", person_being_liked: "TEST_USER_USERNAME_UNLIKE_2"})
+               .end(function(err, res){
+                   res.should.have.status(200);
+                   res.body.result.should.equal("PENDING");
+                   chai.request(server)
+                       .delete('/unlike')
+                       .query({person_unliking: "TEST_USER_USERNAME_UNLIKE_1", person_being_unliked: "TEST_USER_USERNAME_UNLIKE_2" })
+                       .end(function(err, res){
+                           res.should.have.status(200);
+                           res.body.result.should.equal("UNLIKED");
+                           done();
+                       })
+               })
+       });
+    });
 
-        it("should respond with a 404", function(done){
+    describe("Scenario 2: user likes a nonexistent user", function () {
+
+        it("should respond with a 404", function (done) {
             chai.request(server)
-                .post('/unlike')
-                .query({person_unliking: "TEST_USER_USERNAME_UNLIKE_1", person_being_unliked: "NON_EXITENT_USER" })
-                .end(function(err, res){
+                .delete('/like')
+                .query({person_liking: "TEST_USER_USERNAME_UNLIKE_1", person_being_liked: "NON_EXISTENT_USER"})
+                .end(function (err, res) {
                     res.should.have.status(404);
                     done();
                 })
         });
-
     });
 
     describe("Scenario 3: user unlkining is non existent", function(){
         it("should respond with a 404", function(done){
             chai.request(server)
-                .post('/unlike')
+                .delete('/unlike')
                 .query({person_unliking: "NON_EXISTENT_USER", person_being_unliked: "TEST_USER_USERNAME_UNLIKE_1" })
                 .end(function(err, res){
                     res.should.have.status(404);
@@ -103,11 +102,10 @@ describe("Unliking functionality", function(){
 
         it("should respond with a 409", function(done) {
             chai.request(server)
-                .post('/unlike')
+                .delete('/unlike')
                 .query({person_unliking: "TEST_USER_USERNAME_UNLIKE_1", person_being_unliked: "TEST_USER_USERNAME_UNLIKE_1"})
                 .end(function (err, res) {
                     res.should.have.status(409);
-                    res.body.msg.should.equal("YOU CANNOT UNLIKE YOURSELF");
                     done();
                 })
         });

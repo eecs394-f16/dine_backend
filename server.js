@@ -21,6 +21,7 @@ var candidateRoutes = require('./app/routes/candidate.js');
 var userRoutes = require('./app/routes/user.js');
 var loginRoutes = require('./app/routes/login.js');
 var likeRoutes = require('./app/routes/like.js');
+var unlikeRoutes = require('./app/routes/unlike.js');
 
 
 if(environment !=='test'){
@@ -65,7 +66,7 @@ app.route('/like')
     .post(likeRoutes.like);
 
 app.route('/unlike')
-    .post(likeRoutes.unlike);
+    .delete(likeRoutes.unlike);
 
 
 //passport

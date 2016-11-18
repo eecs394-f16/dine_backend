@@ -57,65 +57,22 @@ var unlike = function(req, res){
         res.status(409).send("users in query must be different")
     }
 
-    var countUsersFound = 0;
-    var user_id = -1;
-    var candidate_id = -1;
+    var person_unliking_query =  "(SELECT id FROM users WHERE username = '"+person_unliking+"')";
+    var person_being_unliked_query =  "(SELECT id FROM users WHERE username = '"+person_being_unliked+"')";
 
-    getUser(person_being_unliked,
-        function(data){
-            if(data.length ==0){
-                res.status(404).send({msg: "USER - " + person_being_unliked+ " - COULD NOT BE FOUND"});
-                return;
-            }
-            candidate_id = data[0].id;
-            if(candidate_id >-1 && user_id >-1){
-                deleteLikePairingFromDatabase(user_id, candidate_id, res,req)
-            }
-        },
-        function(error){
-            res.status(500).send(error);
-        }
-    );
-
-    getUser(person_unliking,
-        function(data){
-            if(data.length ==0){
-                res.status(404).send({msg: "USER - " + person_unliking+ " - COULD NOT BE FOUND"});
-                return;
-            }
-            user_id = data[0].id;
-            if(candidate_id >-1 && user_id >-1){
-                deleteLikePairingFromDatabase(user_id, candidate_id, res,req)
-            }
-        },
-        function(error){
-            res.status(500).send(error);
-        }
-    );
-
-};
-
-/**
- *
- * @param user_id
- * @param candidate_id
- * @param res
- * @param req
- */
-var deleteLikePairingFromDatabase = function(user_id, candidate_id, res,req){
-
-    var sqlString = "DELETE FROM user_likes_candidate where user_id = " +user_id+ " AND candidate = " + candidate_id;
+    var sqlString = "DELETE FROM user_likes_candidate where user_id = " +person_unliking_query+ " AND candidate = " + person_being_unliked_query;
 
     db.interactWithDatabase(sqlString,
         //on success
         function(data, error){
             if(error){
-                res.json(error);
+                res.send(500).send(error);
             }else{
-                res.json({result: "UNLIKED"});
+                res.send({msg: "UNLIKED"});
             }
         })
 };
+
 
 var checkIfLike = function(does_user, like_user, failure, success){
 
