@@ -101,25 +101,6 @@ var checkIfLike = function(does_user, like_user, failure, success){
         })
 };
 
-/**
- *
- * @param params
- * @param successCallback
- * @param failureCallback
- */
-var getUser = function(username, successCallback, failureCallback){
-    var sqlString = "SELECT * FROM users where username = '"+username+"';";
-    db.interactWithDatabase(sqlString,
-        //on success
-        function(data, error){
-            if(error){
-                failureCallback(error);
-            }else{
-                successCallback(data);
-            }
-        })
-};
-
 module.exports = {
     like: like,
     unlike: unlike

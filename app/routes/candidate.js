@@ -8,7 +8,7 @@ db = require('../../config/database.js');
 var getAllCandidates = function(req,res){
     var userId = req.query.userId;
 
-    var users_cte = "SELECT DISTINCT ON (candidates.user_id) *"
+    var users_cte = "SELECT DISTINCT ON (candidates.user_id) *, candidates.user_id as id"
     + " FROM user_likes_candidate candidates,"
 	+ " LATERAL ("
 	    + " SELECT CASE WHEN EXISTS("
@@ -18,7 +18,7 @@ var getAllCandidates = function(req,res){
 		+ " candidate = 8"
 	    + " ) THEN true ELSE false END AS i_like"
 		  + " ) t, LATERAL ( SELECT * FROM users ) info"
-    + " WHERE candidates.user_id != " + userId
+    + " WHERE candidates.user_id != " + userId;
 
     var miles = 200;
 
