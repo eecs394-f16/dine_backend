@@ -66,7 +66,7 @@ app.route('/like')
     .post(likeRoutes.like);
 
 app.route('/unlike')
-    .delete(likeRoutes.unlike);
+    .post(likeRoutes.unlike);
 
 
 //passport
