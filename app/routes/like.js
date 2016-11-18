@@ -32,7 +32,7 @@ var like = function(req,res){
         function(data, error){
             if(error){
                 if(error.code == 23502){
-                    res.status(404).send("One of the users in your query is non-esistant");
+                    res.status(404).send("One of the users in your query is non-existant");
                 }
                 res.json(error);
             }else{
