@@ -47,32 +47,25 @@ var getAllCandidates = function(req,res){
      //    + " WHERE distance_km <= (" + miles + "* 1609.344) AND"
      //        + " user_location.user_id != " + userId;
 
-    var sqlString = "SELECT u.*, ulk.likes, ulk2.likes as i_like"
-        + " from users u"
-        + " LEFT OUTER JOIN"
-        + "   ("
-        + "       SELECT *"
-        + "       from user_likes_candidate ulk"
-        + "       where ulk.candidate = " + userId
-        + "   ) as ulk"
-        + " on u.id = ulk.user_id"
-        + " LEFT OUTER JOIN"
-        + "   ("
-        + "       SELECT *"
-        + "       from user_likes_candidate ulk"
-        + "       where ulk.user_id = " + userId
-        + "   ) as ulk2"
-        + " on u.id = ulk.user_id"
-        +" where not u.id = "+userId
-        +" and (u.photo_link NOTNULL OR u.industry NOTNULL or u.job_title NOTNULL);";
+    var sqlString ="SELECT u_and_ulk.*, ulk2.likes as i_like FROM"
+					+" ( SELECT u.*, ulk.likes FROM users u"
+					+" LEFT OUTER JOIN"
+					+" (SELECT * FROM user_likes_candidate ulk WHERE ulk.candidate = "+userId+" ) AS ulk"
+					+" ON u.id = ulk.user_id WHERE NOT u.id = "+userId+" AND (u.photo_link NOTNULL OR u.industry NOTNULL or u.job_title NOTNULL)"
+					+" ) AS u_and_ulk"
+					+" LEFT OUTER JOIN"
+					+" (SELECT * from user_likes_candidate ulk  where ulk.user_id = "+userId+" ) as ulk2"
+					+" on u_and_ulk.id = ulk2.user_id;";
 
-	db.interactWithDatabase(sqlString,
+
+
+    db.interactWithDatabase(sqlString,
 				//on success
 	    function(data, error){
 		if(error){
 		    res.status(500).send(error);
 		}else{
-		    console.log(error)
+		    console.log(error);
 		    res.status(200).send(data);
 		}
 	    })
