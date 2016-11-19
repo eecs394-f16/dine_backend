@@ -54,7 +54,7 @@ var getAllCandidates = function(req,res){
 					+" ON u.id = ulk.user_id WHERE NOT u.id = "+userId+" AND (u.photo_link NOTNULL OR u.industry NOTNULL or u.job_title NOTNULL)"
 					+" ) AS u_and_ulk"
 					+" LEFT OUTER JOIN"
-					+" (SELECT * from user_likes_candidate ulk  where ulk.user_id = "+userId+" limit 1) as ulk2"
+					+" (SELECT * from user_likes_candidate ulk  where ulk.user_id = "+userId+") as ulk2"
 					+" on u_and_ulk.id = ulk2.candidate;";
 
 
