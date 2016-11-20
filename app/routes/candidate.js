@@ -55,7 +55,8 @@ var getAllCandidates = function(req,res){
 					+" ) AS u_and_ulk"
 					+" LEFT OUTER JOIN"
 					+" (SELECT * from user_likes_candidate ulk  where ulk.user_id = "+userId+") as ulk2"
-					+" on u_and_ulk.id = ulk2.candidate;";
+					+" on u_and_ulk.id = ulk2.candidate"
+					+" where ulk2.likes is null or u_and_ulk.likes is null ;";
 
 
 
