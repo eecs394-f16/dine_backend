@@ -32,8 +32,12 @@ var like = function(req,res){
         function(data, error){
             if(error){
                 if(error.code == 23502){
-                    res.status(404).send("One of the users in your query is non-existant");
+                    res.status(404).send({result: "ERROR", msg: "One of the users in your query is non-existant"});
                 }
+                if(error.code == 23505){
+                    res.status(409).send({result: "ERROR", msg: "You cannot like the same user twice!"});
+                }
+                error.result = "ERROR";
                 res.json(error);
             }else{
 

@@ -40,9 +40,24 @@ describe("Liking functionality", function () {
                 checkIfDone();
             });
 
+        chai.request(server)
+            .post('/user')
+            .send({
+                "first_name": "TEST_USER_FIRST_3",
+                "last_name": "TEST_USER_LAST_3",
+                "username": "TEST_USER_USERNAME_LIKE_3",
+                "email": "TEST_LIKE@USER.EMAIL_3",
+                "password": "TESTPASSWORD"
+
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                checkIfDone();
+            });
+
         var state = 0;
         var checkIfDone = function () {
-            if (state == 0) {
+            if (state < 2) {
                 state++
             } else {
                 done();
@@ -113,7 +128,29 @@ describe("Liking functionality", function () {
         });
     });
 
+    describe("Scenario 1: user 1 likes user 2, then user 1 likes user 2 again", function () {
+
+        it("should respond with a 0 when user 1 likes user 2", function (done) {
+            chai.request(server)
+                .post('/like')
+                .query({person_liking: "TEST_USER_USERNAME_LIKE_1", person_being_liked: "TEST_USER_USERNAME_LIKE_3"})
+                .end(function (err, res) {
+                    res.should.have.status(200);
+                    res.body.result.should.equal("PENDING");
+                    chai.request(server)
+                        .post('/like')
+                        .query({person_liking: "TEST_USER_USERNAME_LIKE_1", person_being_liked: "TEST_USER_USERNAME_LIKE_3"})
+                        .end(function (err, res) {
+                            res.should.have.status(409);
+                            res.body.result.should.equal("ERROR");
+                            done();
+                        })
+                })
+        });
+    });
+
     after(function (done) {
+        var state = 0;
         chai.request(server)
             .delete('/user')
             .query({username: "TEST_USER_USERNAME_LIKE_1"})
@@ -128,10 +165,18 @@ describe("Liking functionality", function () {
                 res.should.have.status(200);
                 checkIfDone();
             });
-        var state = 0;
+
+        chai.request(server)
+            .delete('/user')
+            .query({username: "TEST_USER_USERNAME_LIKE_3"})
+            .end(function (err, res) {
+                res.should.have.status(200);
+                checkIfDone();
+            });
+
         var checkIfDone = function () {
-            if (state == 0) {
-                state++
+            if (state < 2) {
+                state++;
             } else {
                 done();
             }

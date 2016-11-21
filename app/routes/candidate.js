@@ -47,7 +47,7 @@ var getAllCandidates = function(req,res){
      //    + " WHERE distance_km <= (" + miles + "* 1609.344) AND"
      //        + " user_location.user_id != " + userId;
 
-    var sqlString ="SELECT u_and_ulk.*, ulk2.likes as i_like FROM"
+    var sqlString ="SELECT DISTINCT u_and_ulk.*, ulk2.likes as i_like FROM"
 					+" ( SELECT u.*, ulk.likes FROM users u"
 					+" LEFT OUTER JOIN"
 					+" (SELECT * FROM user_likes_candidate ulk WHERE ulk.candidate = "+userId+" ) AS ulk"
