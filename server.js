@@ -23,7 +23,7 @@ var loginRoutes = require('./app/routes/login.js');
 var likeRoutes = require('./app/routes/like.js');
 var unlikeRoutes = require('./app/routes/unlike.js');
 var matchesRoutes = require('./app/routes/matches.js');
-
+var locationRoutes = require('./app/routes/location.js');
 
 if(environment !=='test'){
     app.use(morgan('dev')); //log ever request to console
@@ -72,6 +72,8 @@ app.route('/unlike')
 app.route('/matches')
     .get(matchesRoutes.getAllMatches);
 
+app.route('/location')
+    .post(locationRoutes.updateLocation);
 
 //passport
 // app.use(session({secret: process.env.SECRET_KEY}));
