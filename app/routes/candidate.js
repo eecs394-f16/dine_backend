@@ -7,7 +7,7 @@ db = require('../../config/database.js');
  */
 var getAllCandidates = function(req,res){
     var userId = req.query.userId;
-    var miles = req.query.miles ? req.query.miles : 20
+    var miles = req.query.miles ? req.query.miles : 5000
     
     var sqlString = 'WITH likes AS (' +
 	' SELECT u.candidate AS id, true AS i_like ' +
