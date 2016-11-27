@@ -1,0 +1,70 @@
+<div class='container' id="candidates-page">
+    <div ng-if='state.error'>
+        <div class='bs-callout bs-callout-danger'>
+            <h3>ERROR</h3>
+            <p>{{state.error}}</p>
+        </div>
+    </div>
+
+    <div ng-if='state.working'>
+        <h3>
+            Searching for people in the area...
+            <span class='glyphicon glyphicon-refresh glyphicon-spin'></span>
+       </h3>
+    </div>
+    <div ng-if="!state.working">
+        <!-- <div ng-if='!currentCandidate'>
+            <button class='btn btn-primary' ng-click="getNextSetOfMatches()">
+                Refresh
+            </button>
+        </div> -->
+        <div>
+            <div ng-if='match' id='match-overlay'>
+                <h1>
+                    IT'S A MATCH!!!
+                </h1>
+
+                <img ng-src="{{currentCandidate.photo_link}}" />
+                <button class='btn btn-default' ng-click="goToMatches()">
+                    Go To Matches
+                </button>
+                <button class='btn btn-default' ng-click="removeMatchOverlay()">
+                    Keep Swiping
+                </button>
+            </div>
+            <div id='swiping-zone' ng-class="{'blur-me':match}">
+
+                <div class='face-card' ng-class="{'i-like':candidate.liked}" ng-repeat="candidate in candidates">
+                    <!-- TODO - standardize size of cards -->
+                    <div class='row'>
+                        <div class="col-xs-3">
+                            <img ng-src="{{candidate.photo_link}}" />
+                        </div>
+
+                        <div class="col-xs-7">
+                            <h2 id='candidate-name'>
+                                {{candidate.first_name}} {{candidate.last_name}}
+                            </h2>
+                            <h5 id = 'candidate-description'>
+                                {{candidate.job_title}} at {{candidate.employer}}
+                            </h5>
+                        </div>
+                        <div class='col-xs-2 like-button-col'>
+                                <button ng-if='!candidate.liked' class='btn btn-success' ng-click="like(candidate)">
+                                    <span class = "glyphicon glyphicon-ok">
+                                    </span>
+                                </button>
+
+                                <button ng-if='candidate.liked' class='btn btn-default' ng-click="unlike(candidate)">
+                                    <span class = "glyphicon glyphicon-remove">
+                                    </span>
+                                </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

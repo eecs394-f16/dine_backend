@@ -1,0 +1,49 @@
+<div id='login-page' class="container  form-page">
+    <div ng-if='user==undefined'>
+      <div class="register-form">
+        <h2>
+          Never DiNe alone
+        </h2>
+        <h4>
+          Connect with professionals in your area.
+        </h4>
+
+        <br>
+        <br>
+
+        <h3 ng-if="working">
+            Logging you in...
+            <span class='glyphicon glyphicon-refresh glyphicon-spin'></span>
+        </h3>
+
+        <form ng-submit="logIn()" ng-if="!working">
+            <div class="form-group">
+                <input type="email" class="form-control" id="loginEmail" placeholder="Email" ng-model="loginInfo.email" ng-required="true">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="loginPassword" placeholder="Password" ng-model="loginInfo.password" ng-required="true">
+            </div>
+            <button type="submit" class="btn btn-default">Log In</button>
+        </form>
+      <div>
+        <div ng-if='error'>
+            <div class='bs-callout bs-callout-danger'>
+                <h3> ERROR </h3>
+                <p>
+                    {{error}}
+                </p>
+            </div>
+        </div>
+
+        <hr />
+        <div ng-if="!working">
+            <h4>
+                Don't have an account?
+            </h4>
+            <a class='btn btn-default' href="#/register">
+                Go To Register
+            </a>
+        </div>
+    </div>
+
+</div>

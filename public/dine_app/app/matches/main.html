@@ -1,0 +1,27 @@
+<div class='container' id="matches-page">
+    <h1 ng-if="matches.length ==0">
+        You don't have any matches yet :(
+    </h1>
+
+    <div ng-if="matches.length > 0" id='swiping-zone' ng-class="{'blur-me':match}">
+        <div class='face-card' ng-repeat="match in matches">
+            <div class='row'>
+                <div class="col-xs-3">
+                    <img ng-src="{{match.photo_link}}" />
+                </div>
+
+                <div class="col-xs-7">
+                    <h2 id='candidate-name'>
+                        {{match.first_name}} {{match.last_name}}
+                    </h2>
+                    <h5 id='candidate-description'>
+                        {{match.job_title}} at {{match.employer}}
+                    </h5>
+                    <h5>
+                        {{match.phone_number}}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
